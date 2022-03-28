@@ -40,7 +40,7 @@ class ApiController extends Controller
         try {
             $orderBy = $order == 2 ? 'num_comments' : 'ups';
 
-            $posts = PostModel::select('title', 'author', 'ups', 'num_comments')
+            $posts = PostModel::select('title', 'author', 'ups', 'num_comments', 'created')
                 ->whereRaw("date(created) BETWEEN '$initial' AND '$final'")
                 ->orderBy($orderBy, 'DESC')
                 ->get();
