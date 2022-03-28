@@ -61,5 +61,28 @@ class ApiController extends Controller
         }
     }
 
-    
+    public function getAuthors($order = 1)
+    {
+        try {
+            $orderBy = $order == 2 ? 'num_comments' : 'ups';
+
+            $authors = PostModel::select('author')
+                ->orderBy($orderBy, 'DESC')
+                ->get();
+
+            if (count($authors) > 0) {
+                return response()->json([
+                    'success' => true,
+                    'data' => json_decode($authors->toJson()),
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Results not found',
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
