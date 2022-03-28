@@ -15,7 +15,8 @@ class CreatePostTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('api_id');
+            $table->text('title');
             $table->string('author');
             $table->integer('ups')->nullable();
             $table->integer('num_comments')->nullable();
