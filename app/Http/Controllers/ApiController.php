@@ -35,5 +35,31 @@ class ApiController extends Controller
         }
     }
 
+    public function getPosts($initial, $final, $order = 1)
+    {
+        try {
+            $orderBy = $order == 2 ? 'num_comments' : 'ups';
+
+            $posts = PostModel::select('title', 'author', 'ups', 'num_comments')
+                ->whereRaw("date(created) BETWEEN '$initial' AND '$final'")
+                ->orderBy($orderBy, 'DESC')
+                ->get();
+
+            if (count($posts) > 0) {
+                return response()->json([
+                    'success' => true,
+                    'data' => json_decode($posts->toJson()),
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Results not found',
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     
 }
