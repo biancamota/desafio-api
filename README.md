@@ -3,7 +3,8 @@
 ## Sobre
 
 A API pública desenvolvida em PHP com Laravel que consome os dados de outra API externa https://api.reddit.com/r/artificial/hot salvando-os em uma base para posterior consulta através de dois endpoints.
-É possível consultar as postagens em um determinado período de tempo e seus authores. 
+É possível consultar as postagens em um determinado período de tempo e seus authores.
+Um comando foi gerado para chamar a api externa todos os dias as 6h.
 
 ## Utilização
 
@@ -22,6 +23,9 @@ Abra no seu editor de código, abra o arquivo env.example, edite com as suas con
 ```bash
 # Rode as migrations
 $ php artisan migrate
+
+# Rode este comando para popular a tabela
+$ php artisan StoreDataApi:generate
 
 # Execute a aplicação 
 $ php artisan serve
