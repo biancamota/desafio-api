@@ -1,64 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Sobre
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A API pública desenvolvida em PHP com Laravel que consome os dados de outra API externa https://api.reddit.com/r/artificial/hot salvando-os em uma base para posterior consulta através de dois endpoints.
+É possível consultar as postagens em um determinado período de tempo e seus authores.
+Um comando foi gerado para chamar a api externa todos os dias as 6h.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Utilização
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🎲 Rodando o projeto
 
-## Learning Laravel
+```bash
+# Clone este repositório
+$ git clone <git@github.com:biancamota/desafio-api.git>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Acesse a pasta do projeto
+$ cd desafio-api
+```
+Abra no seu editor de código, abra o arquivo env.example, edite com as suas configurações de ambiente e salve com .env
+![image](https://user-images.githubusercontent.com/12559964/160451010-2fc84217-572f-4034-92c6-a9f5e57b8d24.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+# Rode as migrations
+$ php artisan migrate
 
-## Laravel Sponsors
+# Rode este comando para popular a tabela
+$ php artisan StoreDataApi:generate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# Execute a aplicação 
+$ php artisan serve
 
-### Premium Partners
+# O servidor inciará na porta:8000 - acesse <http://127.0.0.1:8000>
+```
+## Chamando a api
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### posts
 
-## Contributing
+![image](https://user-images.githubusercontent.com/12559964/160456195-cb9e30c9-2736-41ee-aa25-6f794ad08f02.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Retorna as postagens criadas dentro do período informado em ordem decrescente seguindo a ordenação estipulada
 
-## Code of Conduct
+<table>
+  <thead>
+    <tr>
+      <th>Atributo</th>
+      <th>Tipo</th>
+      <th>Obrigatoriedade</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>initial_date</th>
+      <td>string</td>
+      <td>Sim</td>
+      <td>Data inicial do período no formato yyyy-mm-dd</td>
+    </tr>
+    <tr>
+      <th>final_date</th>
+      <td>string</td>
+      <td>Sim</td>
+      <td>Data final do período no formato yyyy-mm-dd</td>
+    </tr>
+    <tr>
+      <th>order</th>
+      <td>integer</td>
+      <td>Opcional</td>
+      <td>Informe 1 para ordenar pela quantidade de "ups" ou 2 para ordenadar pela quantidade de comentários. Se o parametro não for passado, será considerado 1.</td>
+    </tr>
+    
+  </tbody>
+</table>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+![image](https://user-images.githubusercontent.com/12559964/160455337-bb089104-9c66-4c84-8eaa-fbb7c889fa40.png)
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+### authors
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+![image](https://user-images.githubusercontent.com/12559964/160456311-a097d931-e230-4be8-a410-90ca583c91a7.png)
+
+Retorna uma lista de autores em ordem decrescente seguindo a ordenação estipulada
+
+<table>
+  <thead>
+    <tr>
+      <th>Atributo</th>
+      <th>Tipo</th>
+      <th>Obrigatoriedade</th>
+      <th>Default</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>order</th>
+      <td>integer</td>
+      <td>Opcional</td>
+      <td>1</td>
+      <td>Informe 1 para ordenar pela quantidade de "ups" ou 2 para ordenadar pela quantidade de comentários</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+![image](https://user-images.githubusercontent.com/12559964/160456435-dd97a757-39ef-452c-a89b-b72de46d81c1.png)
+
+
+
